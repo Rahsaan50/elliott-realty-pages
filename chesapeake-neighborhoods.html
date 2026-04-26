@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chesapeake Neighborhoods | T. Rahsaan Elliott, RealtorÂ®</title>
+<meta name="description" content="A neighborhood-by-neighborhood breakdown of Chesapeake, VA â schools, prices, vibe, and who each area is right for.">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #800020;
+    --navy: #4169E1;
+    --dark: #1F2937;
+    --darker: #0D1117;
+    --gold: #f0c060;
+    --steel: #1E2D40;
+    --card-bg: #161b22;
+    --card-border: rgba(255,255,255,0.08);
+    --light: #F8FAFC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Jost', sans-serif; background: var(--darker); color: var(--light); }
+
+  /* HERO */
+  .hero { position: relative; height: 580px; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(8,12,18,0.93) 40%, rgba(8,12,18,0.4) 100%); }
+  .hero-content { position: absolute; bottom: 0; left: 0; padding: 52px 60px; max-width: 680px; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.05; color: #fff; margin-bottom: 18px; }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub { font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.8); max-width: 520px; margin-bottom: 28px; }
+  .btn-primary { display: inline-block; background: var(--burgundy); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; padding: 13px 26px; border-radius: 6px; text-decoration: none; margin-right: 10px; }
+  .btn-ghost { display: inline-block; border: 1.5px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.75); font-size: 13px; font-weight: 600; padding: 12px 22px; border-radius: 6px; text-decoration: none; }
+
+  /* STATS BAND */
+  .stats-band { background: var(--steel); border-top: 3px solid var(--gold); padding: 36px 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stat-item { text-align: center; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 20px 12px; }
+  .stat-num { font-size: 32px; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+  .stat-sub { font-size: 11px; color: rgba(255,255,255,0.35); font-style: italic; }
+
+  /* SECTION */
+  .section { max-width: 1100px; margin: 0 auto; padding: 64px 60px; }
+  .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .section-title { font-size: clamp(26px, 3.5vw, 38px); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 14px; }
+  .section-title span { color: var(--gold); }
+  .section-body { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.68); max-width: 660px; margin-bottom: 44px; }
+
+  /* NEIGHBORHOOD GRID */
+  .hood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .hood-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
+  .hood-card:hover { transform: translateY(-3px); border-color: rgba(240,192,96,0.25); }
+  .hood-img { height: 160px; position: relative; overflow: hidden; }
+  .hood-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hood-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%); display: flex; align-items: flex-end; padding: 14px 18px; }
+  .hood-name { font-size: 18px; font-weight: 800; color: #fff; }
+  .hood-body { padding: 18px 20px; }
+  .hood-vibe { font-size: 12px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .hood-desc { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 14px; }
+  .hood-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .tag-school { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+  .tag-price { background: rgba(240,192,96,0.12); border: 1px solid rgba(240,192,96,0.25); color: var(--gold); }
+  .tag-vibe { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.65); }
+  .hood-footer { padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-between; align-items: center; }
+  .hood-price { font-size: 16px; font-weight: 800; color: var(--gold); }
+  .hood-price-label { font-size: 10px; color: rgba(255,255,255,0.4); }
+  .hood-best { font-size: 11px; color: rgba(255,255,255,0.55); font-style: italic; text-align: right; max-width: 120px; }
+
+  /* PHOTO DIVIDER */
+  .photo-divider { position: relative; height: 280px; overflow: hidden; }
+  .photo-divider img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-divider-overlay { position: absolute; inset: 0; background: rgba(8,12,18,0.68); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 40px; }
+  .divider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .divider-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 12px; }
+  .divider-sub { font-size: 15px; color: rgba(255,255,255,0.72); max-width: 520px; line-height: 1.6; }
+
+  /* INSIDER TIPS */
+  .tips-section { background: #0f1419; border-top: 1px solid rgba(255,255,255,0.06); }
+  .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .tip-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 22px; display: flex; gap: 14px; }
+  .tip-icon { font-size: 24px; flex-shrink: 0; }
+  .tip-body strong { display: block; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .tip-body p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+  /* CTA */
+  .cta-section { background: var(--steel); border-top: 3px solid var(--burgundy); }
+  .cta-inner { max-width: 1100px; margin: 0 auto; padding: 64px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .cta-left h2 { font-size: clamp(26px, 3.5vw, 38px); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 14px; }
+  .cta-left h2 span { color: var(--gold); }
+  .cta-left p { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.7); margin-bottom: 28px; }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-back { display: inline-block; border: 1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 600; padding: 11px 20px; border-radius: 6px; text-decoration: none; }
+  .cta-right { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 28px; }
+  .cta-right h3 { font-size: 14px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px; }
+  .contact-line { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.78); margin-bottom: 10px; }
+  .coverage { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.07); }
+
+  /* FOOTER */
+  .footer-bar { background: #060809; border-top: 1px solid rgba(255,255,255,0.06); padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .footer-bar p { font-size: 11px; color: rgba(255,255,255,0.3); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Chesapeake Virginia" onerror="this.style.background='#1a2a1a'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Chesapeake, Virginia Â· Neighborhood Guide</div>
+    <h1>Find Your <span>Neighborhood</span><br>in Chesapeake</h1>
+    <p class="hero-sub">Chesapeake is Hampton Roads' suburban anchor â top-rated schools, spacious lots, and more new construction than any other city in the region. But not every neighborhood is the same. Here's how to pick the right one.</p>
+    <div>
+      <a href="https://calendly.com/r-elliott-kw" target="_blank" class="btn-primary">Let's Find Your Neighborhood</a>
+      <a href="https://elliott-realty-toolkit.netlify.app/hampton-roads-city-guide-web.html" target="_blank" class="btn-ghost">â City Guide</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="stat-num">$330K</div>
+    <div class="stat-label">Median Price</div>
+    <div class="stat-sub">2024 estimate</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">â­â­â­â­â­</div>
+    <div class="stat-label">School Rating</div>
+    <div class="stat-sub">Top-rated in Virginia</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">242K</div>
+    <div class="stat-label">Acres of Land</div>
+    <div class="stat-sub">Largest city in VA by area</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Low</div>
+    <div class="stat-label">Flood Risk</div>
+    <div class="stat-sub">Compared to most HR cities</div>
+  </div>
+</div>
+
+<!-- NEIGHBORHOODS -->
+<section>
+  <div class="section">
+    <div class="section-eyebrow">The Neighborhoods</div>
+    <h2 class="section-title">Chesapeake Isn't One Place â<br>It's <span>Nine Different Lifestyles</span></h2>
+    <p class="section-body">Chesapeake spans 353 square miles. The vibe in Great Bridge is nothing like the vibe in western Chesapeake. School districts, commute times, lot sizes, and price points all vary significantly depending on where in the city you land. Here's what you need to know.</p>
+
+    <div class="hood-grid">
+
+      <!-- Great Bridge -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Great Bridge" onerror="this.style.background='#1a2a1a'">
+          <div class="hood-img-overlay"><div class="hood-name">Great Bridge</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Established Â· Community Feel</div>
+          <p class="hood-desc">The heart of old Chesapeake. Great Bridge has a tight-knit community feel, strong school reputation, and established neighborhoods with mature trees and larger lots. Historic district, local events, and a real sense of place.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Great Bridge HS</span>
+            <span class="tag tag-price">$290Kâ$430K</span>
+            <span class="tag tag-vibe">Established</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$340K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">Families &amp; move-up buyers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Greenbrier -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Greenbrier" onerror="this.style.background='#1a2020'">
+          <div class="hood-img-overlay"><div class="hood-name">Greenbrier</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Convenient Â· Well-Connected</div>
+          <p class="hood-desc">The most connected neighborhood in Chesapeake. Greenbrier has the best access to shopping, dining, I-64, and Norfolk â making it the top pick for commuters and buyers who want suburban living without sacrificing convenience.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Oscar Smith feeder</span>
+            <span class="tag tag-price">$270Kâ$390K</span>
+            <span class="tag tag-vibe">Commuter-friendly</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$310K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">Commuters &amp; first-time buyers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hickory -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Hickory" onerror="this.style.background='#1a2218'">
+          <div class="hood-img-overlay"><div class="hood-name">Hickory</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Top Schools Â· Premium Living</div>
+          <p class="hood-desc">If schools are your #1 priority, Hickory is your neighborhood. Hickory High School is consistently one of the top-rated schools in Virginia. Newer construction, larger lots, and a premium price point to match.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Hickory HS â Top in VA</span>
+            <span class="tag tag-price">$330Kâ$520K+</span>
+            <span class="tag tag-vibe">Premium</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$400K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">School-focused families</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deep Creek -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Deep Creek" onerror="this.style.background='#101820'">
+          <div class="hood-img-overlay"><div class="hood-name">Deep Creek</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Waterfront Access Â· Value</div>
+          <p class="hood-desc">Deep Creek sits along the Southern Branch of the Elizabeth River and offers some of the best waterfront access in Chesapeake. Established neighborhoods, military-adjacent (NAS Portsmouth nearby), and more affordable than Great Bridge or Hickory.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Deep Creek HS</span>
+            <span class="tag tag-price">$240Kâ$380K</span>
+            <span class="tag tag-vibe">Water access</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$295K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">Water lovers &amp; value buyers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Battlefield -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Battlefield" onerror="this.style.background='#181818'">
+          <div class="hood-img-overlay"><div class="hood-name">Battlefield</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Mixed Â· Central Location</div>
+          <p class="hood-desc">Battlefield sits between Great Bridge and the western corridor â a mixed area with both older established streets and newer pockets of development. Central location with solid access to Route 17 and I-64. Good entry-level opportunities.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Multiple feeders</span>
+            <span class="tag tag-price">$255Kâ$370K</span>
+            <span class="tag tag-vibe">Entry-level</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$290K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">First-time buyers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Western Branch -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Western Branch" onerror="this.style.background='#1a1a10'">
+          <div class="hood-img-overlay"><div class="hood-name">Western Branch</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">New Construction Â· Most Space</div>
+          <p class="hood-desc">This is where Chesapeake is growing. Western Branch has the most active builder activity in the city â master-planned communities, large lots, and brand-new homes. If you want new construction, this is your zone. Commute is longer but the space is unmatched.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Newer school zones</span>
+            <span class="tag tag-price">$370Kâ$620K+</span>
+            <span class="tag tag-vibe">New construction</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$450K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">New construction &amp; space seekers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- South Norfolk -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg?auto=compress&cs=tinysrgb&w=600" alt="South Norfolk" onerror="this.style.background='#181020'">
+          <div class="hood-img-overlay"><div class="hood-name">South Norfolk</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Historic Â· Affordable Â· Transitional</div>
+          <p class="hood-desc">South Norfolk is technically part of Chesapeake but has its own distinct identity â a historic community with deep roots, affordable price points, and proximity to the Elizabeth River. It borders Norfolk and sits close to NSA Hampton Roads and the shipyard corridor. The most affordable Chesapeake entry point with genuine character.</p>
+          <div class="hood-tags">
+            <span class="tag tag-price">$170Kâ$270K</span>
+            <span class="tag tag-vibe">Historic community</span>
+            <span class="tag tag-vibe">NAS-adjacent</span>
+            <span class="tag tag-warn">Older housing stock</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$210K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">Value buyers &amp; investors</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edinburgh -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Edinburgh Chesapeake" onerror="this.style.background='#101a10'">
+          <div class="hood-img-overlay"><div class="hood-name">Edinburgh</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Master-Planned Â· Upscale Â· Amenity-Rich</div>
+          <p class="hood-desc">One of Chesapeake's most polished master-planned communities â manicured common areas, strong HOA, and custom-quality homes. It attracts officers, senior NCOs, and move-up buyers who want something maintained and prestigious. Priced above most of Chesapeake, but it's obvious why.</p>
+          <div class="hood-tags">
+            <span class="tag tag-school">Great Bridge HS feeder</span>
+            <span class="tag tag-price">$400Kâ$700K+</span>
+            <span class="tag tag-vibe">HOA community</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$500K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">Officers &amp; move-up buyers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Riverwalk -->
+      <div class="hood-card">
+        <div class="hood-img">
+          <img src="https://images.pexels.com/photos/1612461/pexels-photo-1612461.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Riverwalk Chesapeake" onerror="this.style.background='#101820'">
+          <div class="hood-img-overlay"><div class="hood-name">Riverwalk</div></div>
+        </div>
+        <div class="hood-body">
+          <div class="hood-vibe">Waterfront Â· Upscale Â· New Development</div>
+          <p class="hood-desc">One of Chesapeake's newer prestige addresses â large custom homes, waterfront access, and a community designed around the river. Buyers get waterfront lifestyle with less flood exposure than Norfolk or Portsmouth. Prices reflect the premium, but so does the quality of life.</p>
+          <div class="hood-tags">
+            <span class="tag tag-price">$450Kâ$900K+</span>
+            <span class="tag tag-vibe">Waterfront homes</span>
+            <span class="tag tag-vibe">Custom construction</span>
+          </div>
+          <div class="hood-footer">
+            <div>
+              <div class="hood-price">~$575K</div>
+              <div class="hood-price-label">median</div>
+            </div>
+            <div class="hood-best">Waterfront &amp; luxury buyers</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="photo-divider">
+  <img src="https://images.pexels.com/photos/7031407/pexels-photo-7031407.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Chesapeake Virginia" onerror="this.style.background='#0D1117'">
+  <div class="photo-divider-overlay">
+    <div class="divider-label">Local Knowledge</div>
+    <div class="divider-title">What the Listings Don't Tell You</div>
+    <div class="divider-sub">The things that matter most about a neighborhood rarely show up in an MLS listing. Here's what I know from working Chesapeake every day.</div>
+  </div>
+</div>
+
+<!-- INSIDER TIPS -->
+<section class="tips-section">
+  <div class="section">
+    <div class="section-eyebrow">Insider Intel</div>
+    <h2 class="section-title">Things You Won't Find <span>on Zillow</span></h2>
+    <p class="section-body">This is what separates a good agent from a great one. Knowing the market is one thing â knowing the streets is another.</p>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">ð«</div>
+        <div class="tip-body">
+          <strong>School district lines matter block by block</strong>
+          <p>Two houses on the same street can be in different school districts in Chesapeake. Always verify the exact school zone for any address before making an offer â don't rely on neighborhood names alone.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">ð</div>
+        <div class="tip-body">
+          <strong>Western Chesapeake commutes add up fast</strong>
+          <p>The space is real and the homes are beautiful, but if you're commuting to NAS Norfolk or downtown Norfolk daily, factor in 35â50 minutes each way. Visit during rush hour before you commit.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">ð§</div>
+        <div class="tip-body">
+          <strong>Deep Creek has flood zone pockets</strong>
+          <p>Waterfront access is a major plus, but some Deep Creek addresses are in FEMA flood zones. Always check the flood map and get a flood insurance quote before closing â it can significantly affect your monthly cost.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">ð</div>
+        <div class="tip-body">
+          <strong>Hickory commands a premium â and holds it</strong>
+          <p>Hickory homes sell faster and at higher price-per-square-foot than almost anywhere else in Chesapeake. If schools are your priority, the premium is worth it. If they're not, you can get more house elsewhere for the same money.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">ðï¸</div>
+        <div class="tip-body">
+          <strong>New construction incentives vary by builder</strong>
+          <p>In western Chesapeake, different builders offer different incentive packages â rate buydowns, closing cost assistance, upgrade allowances. Having a buyer's agent represent you in a new construction deal costs you nothing and gives you negotiating leverage the builder won't offer on their own.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">ð</div>
+        <div class="tip-body">
+          <strong>Greenbrier is the value sweet spot right now</strong>
+          <p>For buyers who want proximity to everything without Hickory prices, Greenbrier consistently delivers. You're 15 minutes from Norfolk, 20 from Virginia Beach, and close to every major retail corridor in the region.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <h2>Ready to Find Your<br><span>Chesapeake Neighborhood?</span></h2>
+      <p>I work Chesapeake every day. I know which streets have the best resale demand, which school zones are worth the premium, and where the value is hiding right now. Let's have a real conversation â no pressure, just clarity.</p>
+      <div class="cta-buttons">
+        <a href="https://calendly.com/r-elliott-kw" target="_blank" class="btn-primary">Book a Free Consultation</a>
+        <a href="https://elliott-realty-toolkit.netlify.app/hampton-roads-city-guide-web.html" target="_blank" class="btn-back">â Back to City Guide</a>
+      </div>
+    </div>
+    <div class="cta-right">
+      <h3>Let's Talk</h3>
+      <div class="contact-line"><span>ð</span> 904.254.6450</div>
+      <div class="contact-line"><span>âï¸</span> r.elliott@kw.com</div>
+      <div class="contact-line"><span>ð</span> r-elliott.kw.com</div>
+      <p class="coverage">T. Rahsaan Elliott Â· RealtorÂ® Â· Keller Williams Coastal Virginia, Chesapeake. I work all of Hampton Roads â Chesapeake is my backyard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <p>T. Rahsaan Elliott &nbsp;|&nbsp; RealtorÂ® &nbsp;|&nbsp; Keller Williams Coastal Virginia, Chesapeake &nbsp;|&nbsp; 904.254.6450</p>
+  <p>Â© 2025 Â· Each office is independently owned and operated. &nbsp;|&nbsp; Equal Housing Opportunity</p>
+</div>
+
+</body>
+</html>
